@@ -1,25 +1,20 @@
-#+title: Title
+#+title: calc
 #+options: toc:nil
 #+startup: showeverything
 #+author: 8dcc
 
-#+begin_comment
-*TODO*: Change project-name and title
-*TODO*: Change output.out in Makefile
-#+end_comment
-
-*Short description.*
+*Emacs-like CLI calculator.*
 
 #+TOC: headlines 2
 
 * Description
-Long description.
+Simple stack-based CLI calculator made in C. Decided to start this project the day I discovered emacs' =calc= (=C-x * i=).
 
 * Building
 
 #+begin_src console
-$ git clone https://github.com/8dcc/project-name
-$ cd project-name
+$ git clone https://github.com/8dcc/calc
+$ cd calc
 $ make
 ...
 #+end_src
@@ -27,6 +22,12 @@ $ make
 * Usage
 
 #+begin_src console
-$ ./project-name.out --help
-...
+$ ./calc.out
+[calc]: 20
+[stack+0] 20
+[calc]: 5
+[stack+0] 20
+[stack+1] 5
+[calc]: +
+[stack+0] 25
 #+end_src
