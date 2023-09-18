@@ -12,7 +12,7 @@
 #include "include/stack.h"
 #include "include/cmds.h"
 
-#define LENGTH(arr) (int)(sizeof(arr) / sizeof((arr)[0]))
+#define LENGTH(arr) (uint32_t)(sizeof(arr) / sizeof((arr)[0]))
 
 static Command cmds[] = {
     { "+", cmd_add },
@@ -30,6 +30,8 @@ static inline void stack_print(void) {
         printf(COL_STK_PRE "[stk+%02" PRIu32 "]" COL_STK_NUM
                            " %" PRId64 COL_NORM "\n",
                i, stk[i]);
+
+    putchar('\n');
 }
 
 static uint32_t input_read(char* out, size_t bufsz) {
