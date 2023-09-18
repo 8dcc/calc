@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include "include/args.h"
+#include "include/cli.h"
 
 int main(int argc, char** argv) {
     int args = args_parse(argc, argv);
@@ -9,7 +10,7 @@ int main(int argc, char** argv) {
         return args_print_usage(argv[0]);
 
     if (args & ARG_MODE_CLI)
-        printf("Hello world!\n");
+        return cli_main();
 
     /* Should not reach here */
     return 0;
