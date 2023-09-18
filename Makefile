@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra
 LDFLAGS=
 
-OBJ_FILES=main.c.o args.c.o
+OBJ_FILES=main.c.o args.c.o cli.c.o
 OBJS=$(addprefix obj/, $(OBJ_FILES))
 
 BIN=calc.out
