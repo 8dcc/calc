@@ -24,10 +24,10 @@ $ make
 #+begin_src console
 $ ./calc.out
 [calc]: 20
-[stack+0] 20
+[stk+00] 20
 [calc]: 5
-[stack+0] 20
-[stack+1] 5
+[stk+00] 20
+[stk+01] 5
 [calc]: +
-[stack+0] 25
+[stk+00] 25
 #+end_src
