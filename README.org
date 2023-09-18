@@ -23,11 +23,25 @@ $ make
 
 #+begin_src console
 $ ./calc.out
+[calc]: 8
+[stk+00] 8
+
 [calc]: 20
-[stk+00] 20
-[calc]: 5
-[stk+00] 20
-[stk+01] 5
+[stk+00] 8
+[stk+01] 20
+
+[calc]: 2
+[stk+00] 8
+[stk+01] 20
+[stk+02] 2
+
+[calc]: /
+[stk+00] 8
+[stk+01] 10
+
 [calc]: +
-[stk+00] 25
+[stk+00] 18
+
+[calc]: q
+$
 #+end_src
