@@ -22,12 +22,12 @@ int main(int argc, char** argv) {
     stk     = calloc(STK_SZ, sizeof(int64_t));
     stk_top = 0;
 
+    /* Launch desired submode */
     int exit_code = 0;
     if (args & ARG_MODE_CLI)
         exit_code = cli_main();
 
+    /* Free stuff and exit with code from *_main() */
     free(stk);
-
-    /* Should not reach here */
     return exit_code;
 }
