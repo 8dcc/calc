@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __unix__
+#include <unistd.h> /* isatty() */
+#endif
+
 #include "include/color.h"
 #include "include/cli.h"
 #include "include/stack.h"
@@ -32,6 +36,15 @@ static Command math_cmds[] = {
 };
 
 /*----------------------------------------------------------------------------*/
+
+static inline void input_prompt(void) {
+#ifdef __unix__
+    if (isatty(0))
+        printf(COL_PROMPT "[calc]: " COL_NORM);
+#else
+    printf(COL_PROMPT "[calc]: " COL_NORM);
+#endif
+}
 
 static inline void stack_print(void) {
     /* For COL_* defines, see include/color.h, for PRI* defines, see
@@ -122,7 +135,8 @@ int cli_main(void) {
 
     /* Main loop */
     while (true) {
-        printf(COL_PROMPT "[calc]: " COL_NORM);
+        /* Ask for command/number. Read it, and parse it if needed. */
+        input_prompt();
         uint32_t input_read_code = input_read(input_buf, INPUT_BUF_SZ);
         bool print_stack         = true;
 
@@ -168,7 +182,6 @@ int cli_main(void) {
                 cmd_dup();
                 break;
             case INPUT_READ_EOF:
-                /* TODO: Input line containing EOF is not parsed */
                 return 0;
             default:
                 break;
