@@ -3,7 +3,7 @@ SETTINGS?=-DUSE_COLOR
 
 CC=gcc
 CFLAGS=-Wall -Wextra
-LDFLAGS=
+LDFLAGS=-lm
 
 OBJ_FILES=main.c.o args.c.o cli.c.o cmds.c.o
 OBJS=$(addprefix obj/, $(OBJ_FILES))
@@ -30,4 +30,4 @@ $(BIN): $(OBJS)
 
 obj/%.c.o : src/%.c
 	@mkdir -p obj/
-	$(CC) $(CFLAGS) $(SETTINGS) -c -o $@ $< $(LDFLAGS)
+	$(CC) $(CFLAGS) $(SETTINGS) -c -o $@ $<
