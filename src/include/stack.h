@@ -18,10 +18,10 @@ static inline void stack_push(int64_t n) {
 }
 
 static inline int64_t stack_pop(void) {
-    if (stk_top < STK_SZ)
+    if (stk_top > 0)
         return stk[--stk_top];
 
-    err_msg("stack_pop: Reached bottom of stack");
+    err_msg("stack_pop: Trying to pop bottom of stack");
     return 0;
 }
 
