@@ -107,7 +107,8 @@ static int print_cmds(void) {
         printf(COL_BOLD "%5s" COL_NORM "  -  %s\n", math_cmds[i].str,
                math_cmds[i].desc);
 
-    return CMD_EXIT_OK;
+    /* So we don't print the stack afterwards */
+    return CMD_EXIT_ERR;
 }
 
 /*----------------------------------------------------------------------------*/
