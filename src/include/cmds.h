@@ -10,8 +10,9 @@ enum cmd_exit_codes {
 
 typedef int (*funcptr_t)(void);
 typedef struct {
-    const char* cmd;
+    const char* str;
     funcptr_t func;
+    const char* desc;
 } Command;
 
 /* Stack commands */
