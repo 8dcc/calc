@@ -63,7 +63,7 @@ static uint32_t input_parse_str(const char* s) {
     /* Stack commands */
     for (size_t i = 0; i < LENGTH(cmds); i++)
         if (!strcmp(s, cmds[i].cmd))
-            cmds[i].func();
+            return cmds[i].func();
 
     return INPUT_PARSE_OK;
 }
@@ -78,26 +78,36 @@ int cli_main(void) {
     while (true) {
         printf(COL_PROMPT "[calc]: " COL_NORM);
         uint32_t input_read_code = input_read(input_buf, INPUT_BUF_SZ);
+        bool print_stack         = (input_read_code != INPUT_READ_EMPTY);
 
         switch (input_read_code) {
             case INPUT_READ_STR:
                 uint32_t input_parse_code = input_parse_str(input_buf);
-                if (input_parse_code == INPUT_PARSE_QUIT)
-                    return 0;
+                switch (input_parse_code) {
+                    case INPUT_PARSE_QUIT:
+                        return 0;
+                    case CMD_EXIT_ERR:
+                        print_stack = false;
+                        break;
+                    case INPUT_PARSE_OK:
+                    case CMD_EXIT_OK:
+                    default:
+                        break;
+                }
 
                 break;
             case INPUT_READ_INT:
                 stack_push(atoi(input_buf));
                 break;
             case INPUT_READ_FLOAT:
-                printf(COL_ERROR "Floats are not supported yet." COL_NORM "\n");
-                input_read_code = INPUT_READ_EMPTY;
+                err_msg("Floats are not supported yet");
+                print_stack = false;
                 break;
             default:
                 break;
         }
 
-        if (input_read_code != INPUT_READ_EMPTY)
+        if (print_stack)
             stack_print();
     }
 
