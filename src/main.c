@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     stk     = calloc(STK_SZ, sizeof(int64_t));
     stk_top = 0;
 
-    /* Launch desired submode */
+    /* Launch desired submode, for now only CLI */
     int exit_code = 0;
     if (args & ARG_MODE_CLI)
         exit_code = cli_main();
