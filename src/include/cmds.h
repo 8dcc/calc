@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 enum cmd_exit_codes {
-    CMD_EXIT_ERR = 0x100,
-    CMD_EXIT_OK  = 0x101,
+    CMD_EXIT_ERR = 0x100, /* Something went wrong whne executing cmd function */
+    CMD_EXIT_OK  = 0x101, /* Command function executed successfully */
 };
 
 typedef int (*funcptr_t)(void);
