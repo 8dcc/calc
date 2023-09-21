@@ -13,11 +13,18 @@
 
 #define LENGTH(arr) (uint32_t)(sizeof(arr) / sizeof((arr)[0]))
 
-static Command cmds[] = {
-    { "+", cmd_add },
-    { "-", cmd_sub },
-    { "*", cmd_mul },
-    { "/", cmd_div },
+static Command stack_cmds[] = {
+    { "d", cmd_del },
+    { "pop", cmd_del },
+    { "swap", cmd_swp },
+};
+
+static Command math_cmds[] = {
+    { "+", cmd_add }, /* Addition */
+    { "-", cmd_sub }, /* Subtraction */
+    { "*", cmd_mul }, /* Multiplication */
+    { "/", cmd_div }, /* Division */
+    { "^", cmd_pow }, /* Power */
 };
 
 /*----------------------------------------------------------------------------*/
@@ -62,10 +69,15 @@ static uint32_t input_parse_str(const char* s) {
     if (!strcmp(s, "q") || !strcmp(s, "quit"))
         return INPUT_PARSE_QUIT;
 
-    /* Stack commands. Defined in src/cmds.c */
-    for (size_t i = 0; i < LENGTH(cmds); i++)
-        if (!strcmp(s, cmds[i].cmd))
-            return cmds[i].func();
+    /* Stack commands. Functions defined in src/cmds.c */
+    for (size_t i = 0; i < LENGTH(stack_cmds); i++)
+        if (!strcmp(s, stack_cmds[i].cmd))
+            return stack_cmds[i].func();
+
+    /* Math commands. Functions defined in src/cmds.c */
+    for (size_t i = 0; i < LENGTH(math_cmds); i++)
+        if (!strcmp(s, math_cmds[i].cmd))
+            return math_cmds[i].func();
 
     warn_msg("input_parse_str: Unknown command \"%s\"", s);
     return INPUT_PARSE_UNK;
@@ -81,7 +93,7 @@ int cli_main(void) {
     while (true) {
         printf(COL_PROMPT "[calc]: " COL_NORM);
         uint32_t input_read_code = input_read(input_buf, INPUT_BUF_SZ);
-        bool print_stack         = (input_read_code != INPUT_READ_EMPTY);
+        bool print_stack         = true;
 
         switch (input_read_code) {
             case INPUT_READ_STR:
@@ -119,6 +131,10 @@ int cli_main(void) {
                 /* TODO: Float support */
                 err_msg("Floats are not supported yet");
                 print_stack = false;
+                break;
+            case INPUT_READ_EMPTY:
+                /* No command, dupplicate top of stack */
+                cmd_dup();
                 break;
             default:
                 break;
