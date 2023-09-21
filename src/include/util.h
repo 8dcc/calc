@@ -24,4 +24,23 @@ static inline void err_msg(const char* fmt, ...) {
     va_end(va);
 }
 
+static inline void warn_msg(const char* fmt, ...) {
+    va_list va;
+    va_start(va, fmt);
+
+#ifdef USE_COLOR
+    fprintf(stderr, COL_WARN);
+#endif
+
+    vfprintf(stderr, fmt, va);
+
+#ifdef USE_COLOR
+    fprintf(stderr, COL_NORM "\n");
+#else
+    fprintf(stderr, "\n");
+#endif
+
+    va_end(va);
+}
+
 #endif /* UTIL_H_ */

@@ -30,12 +30,14 @@
 #define COL_PROMPT  TC_GRN
 #define COL_NORM    TC_NRM
 #define COL_ERROR   TC_RED
+#define COL_WARN    TC_YEL
 #else
 #define COL_STK_NUM ""
 #define COL_STK_PRE ""
 #define COL_PROMPT  ""
 #define COL_NORM    ""
 #define COL_ERROR   ""
+#define COL_WARN    ""
 #endif
 
 #endif /* COLOR_H_ */
