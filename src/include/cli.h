@@ -16,6 +16,8 @@ enum input_parse_types {
     INPUT_PARSE_QUIT  = 2,
 };
 
+/*----------------------------------------------------------------------------*/
+
 int cli_main(void);
 
 #endif /* CLI_H_ */

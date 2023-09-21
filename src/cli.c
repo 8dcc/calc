@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define USE_COLOR
 #include "include/color.h"
 #include "include/cli.h"
 #include "include/stack.h"
