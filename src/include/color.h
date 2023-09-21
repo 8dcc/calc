@@ -31,6 +31,8 @@
 #define COL_NORM    TC_NRM
 #define COL_ERROR   TC_RED
 #define COL_WARN    TC_YEL
+#define COL_INFO    TC_B_BLU
+#define COL_BOLD    TC_B_NRM
 #else
 #define COL_STK_NUM ""
 #define COL_STK_PRE ""
@@ -38,6 +40,8 @@
 #define COL_NORM    ""
 #define COL_ERROR   ""
 #define COL_WARN    ""
+#define COL_INFO    ""
+#define COL_BOLD    ""
 #endif
 
 #endif /* COLOR_H_ */
