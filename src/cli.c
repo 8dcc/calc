@@ -44,8 +44,10 @@ static uint32_t input_read(char* out, size_t bufsz) {
 
         /* Non-number char? */
         if (c == '.' && ret == INPUT_READ_INT)
+            /* Encountered a dot while reading an integer, number is float. */
             ret = INPUT_READ_FLOAT;
         else if (c < '0' || c > '9')
+            /* Not a digit at all, string. Will be parsed in input_parse_str */
             ret = INPUT_READ_STR;
 
         out[i] = c;
@@ -60,12 +62,13 @@ static uint32_t input_parse_str(const char* s) {
     if (!strcmp(s, "q") || !strcmp(s, "quit"))
         return INPUT_PARSE_QUIT;
 
-    /* Stack commands */
+    /* Stack commands. Defined in src/cmds.c */
     for (size_t i = 0; i < LENGTH(cmds); i++)
         if (!strcmp(s, cmds[i].cmd))
             return cmds[i].func();
 
-    return INPUT_PARSE_OK;
+    warn_msg("input_parse_str: Unknown command \"%s\"", s);
+    return INPUT_PARSE_UNK;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -82,24 +85,38 @@ int cli_main(void) {
 
         switch (input_read_code) {
             case INPUT_READ_STR:
+                /* We just read a string, parse it */
                 uint32_t input_parse_code = input_parse_str(input_buf);
                 switch (input_parse_code) {
-                    case INPUT_PARSE_QUIT:
-                        return 0;
-                    case CMD_EXIT_ERR:
+                    case INPUT_PARSE_ERR:
+                    case INPUT_PARSE_OK:
+                        /* Should not reach here */
+                        err_msg("cli_main: Reached unused input parse code "
+                                "(0x%X)\n",
+                                input_parse_code);
                         print_stack = false;
                         break;
-                    case INPUT_PARSE_OK:
+                    case INPUT_PARSE_UNK:
+                    case CMD_EXIT_ERR:
+                        /* Don't print stack if unknown input or cmd failed */
+                        print_stack = false;
+                        break;
+                    case INPUT_PARSE_QUIT:
+                        /* "q" or "quit" commands */
+                        return 0;
                     case CMD_EXIT_OK:
                     default:
+                        /* Executed command and it exited fine. Just continue */
                         break;
                 }
 
                 break;
             case INPUT_READ_INT:
+                /* Input was integer, just push to stack */
                 stack_push(atoi(input_buf));
                 break;
             case INPUT_READ_FLOAT:
+                /* TODO: Float support */
                 err_msg("Floats are not supported yet");
                 print_stack = false;
                 break;
@@ -107,6 +124,7 @@ int cli_main(void) {
                 break;
         }
 
+        /* After executing a valid command, print new stack state */
         if (print_stack)
             stack_print();
     }
