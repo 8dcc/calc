@@ -5,9 +5,10 @@
 
 enum input_read_types {
     INPUT_READ_EMPTY = 0x0, /* No input, just newline */
-    INPUT_READ_STR   = 0x1, /* Not a number, will parse string */
-    INPUT_READ_INT   = 0x2, /* Integer number */
-    INPUT_READ_FLOAT = 0x3, /* Float number */
+    INPUT_READ_EOF   = 0x1, /* Input contains EOF */
+    INPUT_READ_STR   = 0x2, /* Not a number, will parse string */
+    INPUT_READ_INT   = 0x3, /* Integer number */
+    INPUT_READ_FLOAT = 0x4, /* Float number */
 };
 
 enum input_parse_types {

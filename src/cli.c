@@ -53,7 +53,10 @@ static uint32_t input_read(char* out, size_t bufsz) {
     uint32_t i;
     for (i = 0; i < bufsz - 1; i++) {
         char c = getchar();
-        if (c == '\n' || c == EOF)
+        if (c == EOF)
+            return INPUT_READ_EOF;
+
+        if (c == '\n')
             break;
 
         /* Non-number char? */
@@ -164,6 +167,9 @@ int cli_main(void) {
                 /* No command, dupplicate top of stack */
                 cmd_dup();
                 break;
+            case INPUT_READ_EOF:
+                /* TODO: Input line containing EOF is not parsed */
+                return 0;
             default:
                 break;
         }
