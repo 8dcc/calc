@@ -14,9 +14,16 @@ typedef struct {
     funcptr_t func;
 } Command;
 
+/* Stack commands */
+int cmd_del(void);
+int cmd_dup(void);
+int cmd_swp(void);
+
+/* Math commands */
 int cmd_add(void);
 int cmd_sub(void);
 int cmd_mul(void);
 int cmd_div(void);
+int cmd_pow(void);
 
 #endif /* CMDS_H_ */
