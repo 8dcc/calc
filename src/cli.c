@@ -32,12 +32,15 @@ static Command math_cmds[] = {
 static inline void stack_print(void) {
     /* For COL_* defines, see include/color.h, for PRI* defines, see
      * <inttypes.h> */
-    for (uint32_t i = 0; i < stk_top; i++)
+    uint32_t i;
+    for (i = 0; i < stk_top; i++)
         printf(COL_STK_PRE "[stk+%02" PRIu32 "]" COL_STK_NUM
                            " %" PRId64 COL_NORM "\n",
                i, stk[i]);
 
-    putchar('\n');
+    /* Only print spacing if stack was not empty */
+    if (i > 0)
+        putchar('\n');
 }
 
 static uint32_t input_read(char* out, size_t bufsz) {
