@@ -3,15 +3,20 @@
 
 #include <stdint.h>
 
-typedef void (*funcptr_t)(void);
+enum cmd_exit_codes {
+    CMD_EXIT_ERR = 0x100,
+    CMD_EXIT_OK  = 0x101,
+};
+
+typedef int (*funcptr_t)(void);
 typedef struct {
     const char* cmd;
     funcptr_t func;
 } Command;
 
-void cmd_add(void);
-void cmd_sub(void);
-void cmd_mul(void);
-void cmd_div(void);
+int cmd_add(void);
+int cmd_sub(void);
+int cmd_mul(void);
+int cmd_div(void);
 
 #endif /* CMDS_H_ */
