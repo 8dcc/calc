@@ -20,7 +20,14 @@ $ make
 #+end_src
 
 * Usage
+You can use the =help= command to display a list with the available commands:
+#+begin_src console
+$ ./calc.out
+[calc]: help
+...
+#+end_src
 
+Example:
 #+begin_src console
 $ ./calc.out
 [calc]: 8
