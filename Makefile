@@ -29,5 +29,5 @@ $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
 
 obj/%.c.o : src/%.c
-	@mkdir -p obj/
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(SETTINGS) -c -o $@ $<
